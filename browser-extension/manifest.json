@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Seat Watcher Companion",
+  "version": "1.0.3",
+  "description": "Checks your private Seat Watcher list through your browser and alerts you when seats open.",
+  "permissions": [
+    "alarms",
+    "cookies",
+    "notifications",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://bms-seatwatcher-96597.azurewebsites.net/*",
+    "https://*.bookmyshow.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Seat Watcher Companion"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

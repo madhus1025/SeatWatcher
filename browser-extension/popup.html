@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seat Watcher Companion</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <div class="logo">SW</div>
+      <div>
+        <h1>Seat Watcher</h1>
+        <p>Browser companion</p>
+      </div>
+      <span id="statusDot" class="status-dot"></span>
+    </header>
+
+    <section id="connectView">
+      <div class="hero-icon">🔗</div>
+      <h2>Connect your account</h2>
+      <p>Generate a pairing code from the Seat Watcher website, then paste it here.</p>
+      <textarea id="tokenInput" rows="4" spellcheck="false" placeholder="Paste pairing code"></textarea>
+      <button id="pairBtn" class="primary">Connect extension</button>
+      <button id="openAppBtn" class="link">Open Seat Watcher</button>
+    </section>
+
+    <section id="monitorView" class="hidden">
+      <div class="monitor-card">
+        <span id="monitorIcon" class="monitor-icon">✓</span>
+        <div>
+          <strong id="monitorTitle">Connected</strong>
+          <p id="monitorStatus">Waiting for the next check</p>
+        </div>
+      </div>
+      <div class="metrics">
+        <div><strong id="checkedCount">0</strong><span>checked</span></div>
+        <div><strong id="hitCount">0</strong><span>hits</span></div>
+      </div>
+      <button id="checkBtn" class="primary">Check now</button>
+      <button id="viewAppBtn" class="secondary">View watchlist</button>
+      <button id="disconnectBtn" class="link danger">Disconnect</button>
+    </section>
+
+    <p id="error" class="error"></p>
+    <footer>Checks once per minute while your browser is running.</footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

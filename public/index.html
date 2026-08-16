@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0a0d14" />
+<title>Seat Watcher — BookMyShow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='22'>🎟️</text></svg>" />
+</head>
+<body>
+
+<header class="app-header">
+  <div class="container header-inner">
+    <div class="brand">
+      <div class="brand-logo">🎟️</div>
+      <div class="brand-text">
+        <h1>Seat Watcher</h1>
+        <span class="brand-sub">for BookMyShow · checked securely by your browser</span>
+      </div>
+    </div>
+    <nav class="header-actions">
+      <div class="account-pill" id="accountPill">
+        <span class="account-avatar" id="userAvatar">SW</span>
+        <span class="account-copy">
+          <strong id="userName">Loading profile…</strong>
+          <small id="accountMode">Private watchlist</small>
+        </span>
+        <a id="logoutBtn" class="account-logout" href="/.auth/logout?post_logout_redirect_uri=/">Sign out</a>
+      </div>
+      <button id="helpBtn" class="btn ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>How to find URL</span>
+      </button>
+      <button id="testAlarmBtn" class="btn ghost" title="Preview the alarm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        <span>Test alarm</span>
+      </button>
+      <button id="soundBtn" class="btn">
+        <span class="dot" id="soundDot"></span>
+        <span id="soundLabel">Enable sound</span>
+      </button>
+      <button id="silenceBtn" class="btn danger hidden">Silence</button>
+      <label class="volume">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
+        <input type="range" id="volume" min="0" max="1" step="0.05" value="0.5" title="Alarm volume" />
+      </label>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><span></span> Your private seat radar</div>
+      <h2>Never miss a good seat again.</h2>
+      <p>Azure safely stores your private watchlist while the companion extension checks BookMyShow through your own browser and internet connection.</p>
+    </div>
+    <div class="hero-actions">
+      <button id="showAddFormBtn" class="btn primary big">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add a show to watch
+      </button>
+      <button id="helpBtnAlt" class="btn ghost big">
+        Don't know the URL? See how →
+      </button>
+    </div>
+  </section>
+
+  <section id="extensionSetup" class="extension-setup">
+    <div class="extension-intro">
+      <div class="extension-icon" aria-hidden="true">⌁</div>
+      <div>
+        <div class="eyebrow"><span></span> One-time browser setup</div>
+        <h3>Connect the Seat Watcher companion</h3>
+        <p>The extension performs checks from this computer, avoiding Azure's blocked network. Keep Chrome or Edge running while you want monitoring active.</p>
+        <p id="extensionSetupNote" class="extension-setup-note hidden"></p>
+      </div>
+      <span id="extensionBadge" class="extension-badge">Setup required</span>
+    </div>
+    <div class="extension-steps">
+      <article class="extension-step">
+        <span class="extension-step-number">1</span>
+        <div>
+          <h4>Download and extract</h4>
+          <p>Download the companion ZIP and extract the folder somewhere permanent.</p>
+          <a class="btn primary small" href="/downloads/seat-watcher-companion.zip" download>Download extension</a>
+        </div>
+      </article>
+      <article class="extension-step">
+        <span class="extension-step-number">2</span>
+        <div>
+          <h4>Load it in Chrome or Edge</h4>
+          <p>Open <code>chrome://extensions</code> or <code>edge://extensions</code>, enable Developer mode, choose <b>Load unpacked</b>, and select the extracted folder.</p>
+          <button id="copyExtensionsUrlBtn" class="btn ghost small" type="button">Copy extensions URL</button>
+        </div>
+      </article>
+      <article class="extension-step">
+        <span class="extension-step-number">3</span>
+        <div>
+          <h4>Pair your private account</h4>
+          <p>Generate a code, click the extension icon, paste the code, and choose <b>Connect extension</b>.</p>
+          <button id="generatePairingBtn" class="btn small" type="button">Generate pairing code</button>
+        </div>
+      </article>
+    </div>
+    <div id="pairingPanel" class="pairing-panel hidden">
+      <div>
+        <strong>Your pairing code</strong>
+        <p>Private to your account. It expires on <span id="pairingExpiry">—</span>.</p>
+      </div>
+      <code id="pairingCode"></code>
+      <button id="copyPairingBtn" class="btn primary small" type="button">Copy code</button>
+    </div>
+  </section>
+
+  <section id="addFormWrap" class="add-panel hidden">
+    <div class="add-panel-header">
+      <h3>Add a show</h3>
+      <button id="closeAddFormBtn" class="btn icon" title="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <form id="addForm" class="add-form">
+      <label class="field wide">
+        <span class="field-label">
+          <b>Seat-layout URL</b>
+          <button type="button" id="urlHelpLink" class="link-btn">How do I get this?</button>
+        </span>
+        <input id="url" type="url" required autocomplete="off" spellcheck="false"
+          placeholder="https://in.bookmyshow.com/movies/hyd/seat-layout/ET…" />
+        <span class="field-hint" id="regionsHint"></span>
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span class="field-label"><b>Rows to watch</b></span>
+          <input id="rows" type="text" required autocomplete="off" placeholder="L, M, N, O" />
+          <span class="field-hint">Comma-separated letters</span>
+        </label>
+        <label class="field small">
+          <span class="field-label"><b>Seats needed</b></span>
+          <input id="needed" type="number" min="1" max="20" value="5" required />
+        </label>
+        <label class="field check">
+          <input id="contiguous" type="checkbox" checked />
+          <span>Must be together</span>
+        </label>
+      </div>
+      <label class="field wide">
+        <span class="field-label">Nickname <span class="opt">(optional)</span></span>
+        <input id="label" type="text" autocomplete="off" placeholder="e.g. Saturday evening with the gang" />
+      </label>
+      <div class="form-error" id="formError"></div>
+      <div id="addSoundWarning" class="form-warning" role="status">
+        <div>
+          <strong>Sound is disabled</strong>
+          <span>Enable sound now so Seat Watcher can alert you when seats become available.</span>
+        </div>
+        <button type="button" id="addEnableSoundBtn" class="btn small">Enable sound</button>
+      </div>
+      <div class="form-footer">
+        <button type="submit" class="btn primary">Save to watchlist</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="toolbar">
+    <div class="stats">
+      <span class="stat"><span class="stat-num" id="statsWatches">0</span> watching</span>
+      <span class="stat hit"><span class="stat-num" id="statsHits">0</span> with seats now</span>
+    </div>
+    <div class="tools">
+      <span class="refreshed" id="statsRefreshed"></span>
+      <button class="btn ghost small" id="refreshBtn" title="Refresh now">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Refresh
+      </button>
+      <button class="btn ghost small danger" id="clearAllBtn">Clear all</button>
+    </div>
+  </section>
+
+  <section id="cards" class="cards"></section>
+
+  <section id="emptyState" class="empty hidden">
+    <div class="empty-emoji">🎬</div>
+    <h3>Nothing being watched yet</h3>
+    <p>Connect the browser companion, then add a BookMyShow show URL. When seats open in your target rows, the extension and this page will alert you.</p>
+    <button class="btn primary" id="emptyAddBtn">Add my first show</button>
+  </section>
+
+</main>
+
+<footer class="app-footer container">
+  <span>Checks through your browser connection · No BookMyShow login or paid proxy needed</span>
+</footer>
+
+<!-- ─── Card template ──────────────────────────────── -->
+<template id="cardTemplate">
+  <article class="card">
+    <header class="card-header">
+      <div class="card-title">
+        <div class="badges"><span class="badge status"></span></div>
+        <h3 class="movie">Loading…</h3>
+        <div class="meta">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="theater">—</span>
+          <span class="dot-sep"></span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="time">—</span>
+        </div>
+        <div class="sublabel"></div>
+      </div>
+      <div class="card-actions">
+        <button class="btn icon check-btn" title="Check now">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+        <button class="btn icon danger delete-btn" title="Delete">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="hit-banner hidden">
+      <span class="hit-badge">SEATS AVAILABLE</span>
+      <span class="hit-desc"></span>
+    </div>
+
+    <div class="rows-summary"></div>
+
+    <div class="layout-wrap">
+      <div class="screen-arc"></div>
+      <div class="screen-label">SCREEN THIS WAY</div>
+      <svg class="layout" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <footer class="card-footer">
+      <span class="url" title=""></span>
+      <span class="last-checked"></span>
+    </footer>
+  </article>
+</template>
+
+<!-- ─── Help modal ─────────────────────────────────── -->
+<div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="modal-backdrop" data-close="1"></div>
+  <div class="modal-panel">
+    <header class="modal-header">
+      <h2 id="helpTitle">How to find the URL</h2>
+      <button class="btn icon" data-close="1" title="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <p class="modal-lead">Follow along on <a href="https://in.bookmyshow.com" target="_blank" rel="noopener">bookmyshow.com</a>. Four small clicks and you're done.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <div class="step-text">
+            <span class="step-num">1</span>
+            <div>
+              <h4>Open your movie's page</h4>
+              <p>Pick your city on BookMyShow, then open the movie you want to watch. Scroll to the big red <b>Book tickets</b> button and click it.</p>
+            </div>
+          </div>
+          <a class="step-shot" href="/help/step1.png" target="_blank"><img src="/help/step1.png" alt="Step 1: click Book tickets" /></a>
+        </li>
+
+        <li class="step">
+          <div class="step-text">
+            <span class="step-num">2</span>
+            <div>
+              <h4>Pick language &amp; format</h4>
+              <p>A popup asks for language and format. Click one — usually <b>English → 2D</b>, unless you want IMAX / 4DX / Dolby.</p>
+            </div>
+          </div>
+          <a class="step-shot" href="/help/step2.png" target="_blank"><img src="/help/step2.png" alt="Step 2: pick language" /></a>
+        </li>
+
+        <li class="step">
+          <div class="step-text">
+            <span class="step-num">3</span>
+            <div>
+              <h4>Choose a theater &amp; showtime</h4>
+              <p>You'll see a list of theaters with all showtimes. Pick the date at the top, find your theater in the list, and click <b>the showtime button</b> you're interested in (e.g. 06:55 PM).</p>
+            </div>
+          </div>
+          <a class="step-shot" href="/help/step3.png" target="_blank"><img src="/help/step3.png" alt="Step 3: click a showtime" /></a>
+        </li>
+
+        <li class="step">
+          <div class="step-text">
+            <span class="step-num">4</span>
+            <div>
+              <h4>Copy the URL</h4>
+              <p>You'll land on the seat-map page. Click on your browser's <b>address bar</b>, select the whole URL (<kbd>Cmd/Ctrl</kbd> + <kbd>A</kbd>), copy it (<kbd>Cmd/Ctrl</kbd> + <kbd>C</kbd>), and paste it into Seat Watcher. The URL will look like:</p>
+              <code class="url-example">https://in.bookmyshow.com/movies/hyd/seat-layout/ET…/…/…/YYYYMMDD</code>
+            </div>
+          </div>
+          <a class="step-shot" href="/help/step4.png" target="_blank"><img src="/help/step4.png" alt="Step 4: copy URL" /></a>
+        </li>
+      </ol>
+
+      <div class="modal-tips">
+        <h4>Common questions</h4>
+        <p><b>My city isn't Hyderabad or Visakhapatnam.</b> Only those two are supported today. Ask the dev to add yours.</p>
+        <p><b>My URL keeps being rejected as "past-dated."</b> The showtime you picked has already started or ended. Pick a future one.</p>
+        <p><b>The card says "sold canvas not rendered."</b> BookMyShow is being slow. It should self-heal on the next poll.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Alarm acknowledgement ───────────────────────── -->
+<div id="alarmModal" class="modal hidden" role="alertdialog" aria-modal="true" aria-labelledby="alarmTitle" aria-describedby="alarmMessage">
+  <div class="modal-backdrop"></div>
+  <div class="modal-panel alarm-modal-panel">
+    <div class="alarm-modal-body">
+      <div class="alarm-icon" aria-hidden="true">🔔</div>
+      <h2 id="alarmTitle">Seats available!</h2>
+      <p id="alarmMessage"></p>
+      <button id="acknowledgeAlarmBtn" class="btn primary big">Acknowledge and stop alarm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Toasts ─────────────────────────────────────── -->
+<div id="toasts" class="toasts"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>

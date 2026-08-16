@@ -1,0 +1,17 @@
+node_modules/
+
+# Local watch data and runtime output
+watches.json
+watches.json.tmp
+*.log
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Test and editor output
+coverage/
+playwright-report/
+test-results/
+.DS_Store

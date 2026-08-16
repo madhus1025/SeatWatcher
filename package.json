@@ -1,0 +1,21 @@
+{
+  "name": "bms-seat-watcher-web",
+  "version": "1.0.0",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "screenshots": "node scripts/capture-readme-screenshots.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.10.0",
+    "express": "^4.19.2",
+    "playwright": "1.49.1",
+    "playwright-core": "1.49.1",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

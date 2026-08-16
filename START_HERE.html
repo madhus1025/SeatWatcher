@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>Seat Watcher - Fresh Device Setup</title>
+  <style>
+    :root {
+      --bg: #080b12;
+      --panel: #121824;
+      --panel-2: #192131;
+      --border: #273247;
+      --text: #eef2f8;
+      --muted: #98a3b7;
+      --accent: #ff4d5e;
+      --accent-2: #ff923f;
+      --green: #2ad174;
+      --yellow: #ffc857;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 8% -5%, rgba(255, 77, 94, .16), transparent 60%),
+        radial-gradient(700px 500px at 100% 15%, rgba(255, 146, 63, .10), transparent 60%),
+        var(--bg);
+      line-height: 1.55;
+    }
+    button, a { font: inherit; }
+    a { color: #ff9ca6; }
+    .shell { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 58px 0 30px; text-align: center; }
+    .logo {
+      width: 72px; height: 72px; display: grid; place-items: center; margin: 0 auto 20px;
+      border-radius: 22px; font-size: 34px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 16px 50px rgba(255, 77, 94, .3);
+    }
+    .kicker {
+      color: #ff9ca6; font-size: 12px; font-weight: 800;
+      letter-spacing: .13em; text-transform: uppercase;
+    }
+    h1 { margin: 10px 0 12px; font-size: clamp(34px, 6vw, 58px); line-height: 1.05; letter-spacing: -.045em; }
+    header p { max-width: 700px; margin: 0 auto; color: var(--muted); font-size: 17px; }
+    .promise {
+      display: inline-flex; align-items: center; gap: 9px; margin-top: 20px;
+      padding: 9px 14px; border: 1px solid rgba(42, 209, 116, .3);
+      border-radius: 999px; color: #9af1bd; background: rgba(42, 209, 116, .08);
+      font-size: 13px; font-weight: 700;
+    }
+    .progress-wrap {
+      position: sticky; top: 0; z-index: 10; padding: 14px 0;
+      border-bottom: 1px solid rgba(39, 50, 71, .8);
+      backdrop-filter: blur(16px); background: rgba(8, 11, 18, .86);
+    }
+    .progress-row { display: flex; align-items: center; gap: 14px; }
+    .progress-track { height: 9px; flex: 1; overflow: hidden; border-radius: 999px; background: #1d2636; }
+    .progress-bar {
+      height: 100%; width: 0; border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .25s ease;
+    }
+    .progress-label { min-width: 105px; color: var(--muted); font-size: 12px; text-align: right; }
+    main { padding: 30px 0 72px; }
+    .notice {
+      display: grid; grid-template-columns: auto 1fr; gap: 14px;
+      padding: 18px; margin-bottom: 24px; border: 1px solid rgba(255, 200, 87, .32);
+      border-radius: 16px; background: rgba(255, 200, 87, .07);
+    }
+    .notice strong { display: block; color: #ffe29a; }
+    .notice p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+    .platforms { display: flex; gap: 8px; margin-bottom: 22px; }
+    .platform {
+      flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 12px;
+      color: var(--muted); background: var(--panel); cursor: pointer;
+    }
+    .platform.active { color: #fff; border-color: var(--accent); background: rgba(255, 77, 94, .12); }
+    .step {
+      display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 18px;
+      padding: 24px; margin-bottom: 16px; border: 1px solid var(--border);
+      border-radius: 20px; background: linear-gradient(145deg, rgba(25, 33, 49, .92), rgba(18, 24, 36, .92));
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .2);
+    }
+    .step.done { border-color: rgba(42, 209, 116, .5); }
+    .step-num {
+      width: 48px; height: 48px; display: grid; place-items: center;
+      border-radius: 15px; color: #fff; font-size: 18px; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+    .step.done .step-num { background: linear-gradient(135deg, #159c52, var(--green)); }
+    .step h2 { margin: 1px 0 5px; font-size: 21px; letter-spacing: -.02em; }
+    .step p { margin: 0 0 13px; color: var(--muted); }
+    .step ul { margin: 10px 0 14px; padding-left: 20px; color: var(--muted); }
+    .step li + li { margin-top: 6px; }
+    .command {
+      display: flex; align-items: stretch; overflow: hidden; margin: 10px 0;
+      border: 1px solid #34425b; border-radius: 12px; background: #090d14;
+    }
+    .command code {
+      flex: 1; padding: 13px 15px; overflow-x: auto; color: #dce5f4;
+      font: 13px/1.5 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      white-space: nowrap;
+    }
+    .copy {
+      min-width: 68px; border: 0; border-left: 1px solid #34425b;
+      color: #ffadb5; background: #151d2a; cursor: pointer;
+    }
+    .copy:hover { background: #202b3d; }
+    .tip {
+      padding: 12px 14px; margin: 12px 0; border-left: 3px solid var(--yellow);
+      border-radius: 8px; color: #cbd4e3; background: rgba(255, 200, 87, .07);
+      font-size: 13px;
+    }
+    .check-row { display: flex; justify-content: flex-end; margin-top: 16px; }
+    .complete {
+      padding: 9px 13px; border: 1px solid var(--border); border-radius: 10px;
+      color: var(--muted); background: transparent; cursor: pointer;
+    }
+    .step.done .complete { color: #9af1bd; border-color: rgba(42, 209, 116, .35); background: rgba(42, 209, 116, .08); }
+    .use-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 12px 0; counter-reset: use; }
+    .use-card {
+      padding: 14px; border: 1px solid var(--border); border-radius: 12px;
+      color: var(--muted); background: rgba(8, 11, 18, .35); font-size: 12px;
+    }
+    .use-card::before {
+      counter-increment: use; content: counter(use);
+      display: grid; place-items: center; width: 25px; height: 25px; margin-bottom: 8px;
+      border-radius: 8px; color: #fff; background: var(--accent); font-weight: 800;
+    }
+    .success {
+      display: none; padding: 28px; margin: 25px 0; border: 1px solid rgba(42, 209, 116, .5);
+      border-radius: 20px; text-align: center; background: rgba(42, 209, 116, .09);
+    }
+    .success.show { display: block; }
+    .success h2 { margin: 8px 0 5px; }
+    .success p { margin: 0; color: var(--muted); }
+    .trouble {
+      padding: 24px; margin-top: 30px; border: 1px solid var(--border);
+      border-radius: 20px; background: var(--panel);
+    }
+    .trouble h2 { margin-top: 0; }
+    details { padding: 12px 0; border-top: 1px solid var(--border); }
+    details:first-of-type { border-top: 0; }
+    summary { cursor: pointer; font-weight: 700; }
+    details p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+    footer { padding: 28px 0 45px; color: #657187; font-size: 12px; text-align: center; }
+    [data-platform] { display: none; }
+    body[data-os="mac"] [data-platform~="mac"],
+    body[data-os="windows"] [data-platform~="windows"],
+    body[data-os="linux"] [data-platform~="linux"],
+    [data-platform="all"] { display: block; }
+    @media (max-width: 720px) {
+      header { padding-top: 38px; }
+      .step { grid-template-columns: 1fr; padding: 20px; }
+      .use-grid { grid-template-columns: 1fr 1fr; }
+      .platforms { flex-direction: column; }
+    }
+  </style>
+</head>
+<body data-os="mac">
+  <header class="shell">
+    <div class="logo">🎟️</div>
+    <div class="kicker">Fresh-device setup</div>
+    <h1>Seat Watcher in 6 steps</h1>
+    <p>Everything needed to install, start, and use the local BookMyShow watcher. No Azure account, BookMyShow login, API token, or coding experience required.</p>
+    <div class="promise">✓ Runs privately on this computer</div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="shell progress-row">
+      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      <div id="progressLabel" class="progress-label">0 of 6 complete</div>
+    </div>
+  </div>
+
+  <main class="shell">
+    <div class="notice">
+      <span>💡</span>
+      <div>
+        <strong>Keep the terminal window and this computer running while monitoring.</strong>
+        <p>The local watcher checks BookMyShow through your normal internet connection. Closing the terminal or putting the computer to sleep pauses monitoring.</p>
+      </div>
+    </div>
+
+    <div class="platforms" aria-label="Choose operating system">
+      <button class="platform active" data-os="mac">🍎 macOS</button>
+      <button class="platform" data-os="windows">⊞ Windows 10/11</button>
+      <button class="platform" data-os="linux">🐧 Linux</button>
+    </div>
+
+    <section class="step" data-step="1">
+      <div class="step-num">1</div>
+      <div>
+        <h2>Extract this ZIP</h2>
+        <p>Move the ZIP to a convenient place such as Downloads or Documents, then extract it.</p>
+        <div data-platform="mac">
+          <ul><li>Double-click the ZIP.</li><li>Open the new <b>Seat-Watcher-Local</b> folder.</li></ul>
+        </div>
+        <div data-platform="windows">
+          <ul><li>Right-click the ZIP and choose <b>Extract All…</b>.</li><li>Click <b>Extract</b>, then open <b>Seat-Watcher-Local</b>.</li></ul>
+        </div>
+        <div data-platform="linux">
+          <ul><li>Use your file manager's <b>Extract Here</b> option.</li><li>Open the extracted <b>Seat-Watcher-Local</b> folder.</li></ul>
+        </div>
+        <div class="check-row"><button class="complete">Mark step complete</button></div>
+      </div>
+    </section>
+
+    <section class="step" data-step="2">
+      <div class="step-num">2</div>
+      <div>
+        <h2>Install Node.js 22 LTS</h2>
+        <p>Node.js runs the watcher. Download the <b>LTS</b> installer from <a href="https://nodejs.org/en/download" target="_blank" rel="noopener">nodejs.org/en/download</a> and accept the installer defaults.</p>
+        <div class="tip">Already have Node.js? Open a terminal and run <b>node --version</b>. If it starts with <b>v22</b> or newer, continue.</div>
+        <div class="command"><code>node --version</code><button class="copy">Copy</button></div>
+        <div class="check-row"><button class="complete">Mark step complete</button></div>
+      </div>
+    </section>
+
+    <section class="step" data-step="3">
+      <div class="step-num">3</div>
+      <div>
+        <h2>Open a terminal in the app folder</h2>
+        <div data-platform="mac">
+          <p>In Finder, open <b>Seat-Watcher-Local</b>. Right-click the folder background and select <b>New Terminal at Folder</b>. If that option is hidden, open Terminal and type <b>cd </b>, drag the folder into Terminal, then press Return.</p>
+        </div>
+        <div data-platform="windows">
+          <p>Open <b>Seat-Watcher-Local</b> in File Explorer. Click the address bar, type <b>powershell</b>, and press Enter.</p>
+        </div>
+        <div data-platform="linux">
+          <p>Open <b>Seat-Watcher-Local</b> in your file manager, right-click the background, and choose <b>Open in Terminal</b>.</p>
+        </div>
+        <div class="tip">Your terminal should now show the extracted Seat-Watcher-Local folder as its current location.</div>
+        <div class="check-row"><button class="complete">Mark step complete</button></div>
+      </div>
+    </section>
+
+    <section class="step" data-step="4">
+      <div class="step-num">4</div>
+      <div>
+        <h2>Install the app and Chromium</h2>
+        <p>Run these commands one at a time. This is required only once on a new device or after replacing the app folder.</p>
+        <div class="command"><code>npm ci</code><button class="copy">Copy</button></div>
+        <div data-platform="mac windows">
+          <div class="command"><code>npx playwright install chromium</code><button class="copy">Copy</button></div>
+        </div>
+        <div data-platform="linux">
+          <div class="command"><code>npx playwright install --with-deps chromium</code><button class="copy">Copy</button></div>
+        </div>
+        <div class="tip">Wait until both commands finish and the prompt returns. Browser downloads can take several minutes.</div>
+        <div class="check-row"><button class="complete">Mark step complete</button></div>
+      </div>
+    </section>
+
+    <section class="step" data-step="5">
+      <div class="step-num">5</div>
+      <div>
+        <h2>Start Seat Watcher</h2>
+        <p>Run the following command. Leave this terminal window open while monitoring.</p>
+        <div class="command"><code>npm start</code><button class="copy">Copy</button></div>
+        <p>When you see <b>BMS Seat Watcher web listening on :8080</b>, open:</p>
+        <div class="command"><code>http://localhost:8080</code><button class="copy">Copy</button></div>
+        <div class="tip"><b>Future launches:</b> open a terminal in this folder and run only <b>npm start</b>. Stop the app at any time with <b>Ctrl + C</b>.</div>
+        <div class="check-row"><button class="complete">Mark step complete</button></div>
+      </div>
+    </section>
+
+    <section class="step" data-step="6">
+      <div class="step-num">6</div>
+      <div>
+        <h2>Add a show and enable alerts</h2>
+        <div class="use-grid">
+          <div class="use-card">In Seat Watcher, click <b>Enable sound</b> and allow browser notifications/audio if asked.</div>
+          <div class="use-card">On BookMyShow, choose the city, movie, date, theater, showtime, and number of tickets.</div>
+          <div class="use-card">When the seat map opens, copy the full URL containing <b>/seat-layout/</b>.</div>
+          <div class="use-card">Paste it into Seat Watcher, enter rows and seats needed, then click <b>Start watching</b>.</div>
+        </div>
+        <div class="tip">Use the <b>Test alarm</b> button once. Keep the Seat Watcher tab open and prevent the computer from sleeping so the alarm can reach you.</div>
+        <div class="check-row"><button class="complete">Finish setup</button></div>
+      </div>
+    </section>
+
+    <section id="success" class="success">
+      <div style="font-size:42px">🎉</div>
+      <h2>Setup complete</h2>
+      <p>Your local Seat Watcher is ready. Add a show, keep the terminal open, and let it watch the seats.</p>
+    </section>
+
+    <section class="trouble">
+      <h2>Quick troubleshooting</h2>
+      <details>
+        <summary>“node” or “npm” is not recognized</summary>
+        <p>Finish installing Node.js 22 LTS, close all terminal windows, then open a new terminal and try again.</p>
+      </details>
+      <details>
+        <summary>Chromium executable is missing</summary>
+        <p>Run <b>npx playwright install chromium</b> from the app folder. On Linux, use <b>npx playwright install --with-deps chromium</b>.</p>
+      </details>
+      <details>
+        <summary>localhost:8080 does not open</summary>
+        <p>Confirm the terminal running <b>npm start</b> is still open and has no red error. If another app uses port 8080, stop it or start with <b>PORT=8081 npm start</b> on macOS/Linux. In PowerShell, use <b>$env:PORT=8081; npm start</b>.</p>
+      </details>
+      <details>
+        <summary>The watch says the seat canvas did not render</summary>
+        <p>Open the same URL in your normal browser. Ensure the show is still in the future and the seat map appears. If BookMyShow changed the session, copy a fresh seat-layout URL.</p>
+      </details>
+      <details>
+        <summary>No alarm sound</summary>
+        <p>Click <b>Enable sound</b>, then <b>Test alarm</b>. Keep the tab open, raise the system volume, and make sure the browser tab is not muted.</p>
+      </details>
+      <details>
+        <summary>Where is my watchlist stored?</summary>
+        <p>It is stored locally in <b>watches.json</b>, created beside the app after first use. Do not replace that file if you want to retain your watchlist.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="shell">Seat Watcher Local · No BookMyShow credentials required · Monitoring stays on this device</footer>
+
+  <script>
+    const steps = [...document.querySelectorAll(".step")];
+    const key = "seat-watcher-local-setup-v1";
+    const saved = new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+
+    function renderProgress() {
+      steps.forEach((step) => step.classList.toggle("done", saved.has(step.dataset.step)));
+      const done = saved.size;
+      document.getElementById("progressBar").style.width = `${(done / steps.length) * 100}%`;
+      document.getElementById("progressLabel").textContent = `${done} of ${steps.length} complete`;
+      document.getElementById("success").classList.toggle("show", done === steps.length);
+      localStorage.setItem(key, JSON.stringify([...saved]));
+    }
+
+    document.querySelectorAll(".complete").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.closest(".step").dataset.step;
+        if (saved.has(id)) saved.delete(id); else saved.add(id);
+        renderProgress();
+      });
+    });
+
+    document.querySelectorAll(".platform").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.body.dataset.os = button.dataset.os;
+        document.querySelectorAll(".platform").forEach((item) => item.classList.toggle("active", item === button));
+      });
+    });
+
+    document.querySelectorAll(".copy").forEach((button) => {
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(button.previousElementSibling.textContent);
+        const original = button.textContent;
+        button.textContent = "Copied!";
+        setTimeout(() => { button.textContent = original; }, 1200);
+      });
+    });
+
+    const platform = navigator.platform.toLowerCase();
+    const preferred = platform.includes("win") ? "windows" : platform.includes("linux") ? "linux" : "mac";
+    document.querySelector(`.platform[data-os="${preferred}"]`).click();
+    renderProgress();
+  </script>
+</body>
+</html>
