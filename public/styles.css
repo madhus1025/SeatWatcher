@@ -474,7 +474,12 @@ body {
 .app-footer {
   padding: 30px 24px 20px;
   color: var(--text-dim); font-size: 12px; text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 8px 18px;
 }
+.app-footer-links { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.app-footer-links a { color: var(--text-muted); text-decoration: none; }
+.app-footer-links a:hover { color: var(--text); text-decoration: underline; }
 
 /* ─── Modal ────────────────────────────────────────────────── */
 .modal {

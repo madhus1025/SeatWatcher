@@ -7,6 +7,13 @@ show, the rows you care about, and the number of adjacent seats your group
 needs. It keeps checking the live layout, reconstructs the seat map, and alerts
 you the moment a matching block appears.
 
+> [!CAUTION]
+> Seat Watcher is an independent, personal, non-commercial project. It is not
+> affiliated with or authorized by BookMyShow. Automated access may be restricted
+> by BookMyShow's terms, and public source code is not permission to access its
+> service. Read the [Legal and Responsible Use Notice](LEGAL.md) and
+> [Privacy Notice](PRIVACY.md) before running or distributing this software.
+
 [![Node.js 22+](https://img.shields.io/badge/Node.js-22%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Microsoft Edge](https://img.shields.io/badge/Microsoft%20Edge-ready-0078D7?logo=microsoftedge&logoColor=white)](https://www.microsoft.com/edge)
 [![Playwright](https://img.shields.io/badge/Playwright-powered-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
@@ -198,6 +205,19 @@ slugs fall back to Hyderabad.
 
 ## Responsible use
 
-Seat Watcher is an independent utility and is not affiliated with or endorsed
-by BookMyShow. Use sensible polling intervals, monitor only shows you intend to
-book, and follow the website's terms and local requirements.
+Seat Watcher is not affiliated with, authorized by, sponsored by, or endorsed
+by BookMyShow or Bigtree Entertainment. BookMyShow's current
+[Terms and Conditions](https://in.bookmyshow.com/terms-and-conditions) describe
+the website as intended for personal use and impose restrictions relevant to
+automated extraction and reuse. You are responsible for obtaining any required
+permission and complying with applicable terms and law.
+
+Do not use this project to bypass CAPTCHAs, access controls, rate limits, or
+blocks; access account or payment data; run commercial or large-scale
+monitoring; republish third-party content; or impair the service. Use
+conservative intervals and stop if the service objects or blocks access.
+
+See [LEGAL.md](LEGAL.md) for the complete project notice and
+[PRIVACY.md](PRIVACY.md) for the local, hosted, and browser-extension data flow.
+These notices provide transparency but do not eliminate legal or contractual
+risk. Written permission from the service operator is the lowest-risk route.
