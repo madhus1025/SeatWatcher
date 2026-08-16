@@ -14,6 +14,13 @@ you the moment a matching block appears.
 > service. Read the [Legal and Responsible Use Notice](LEGAL.md) and
 > [Privacy Notice](PRIVACY.md) before running or distributing this software.
 
+> [!NOTE]
+> **No behavioral tracking:** Seat Watcher contains no advertising, analytics,
+> fingerprinting, or cross-site profiling code. It does not request or store
+> BookMyShow credentials or payment details. It processes only the account,
+> watch configuration, seat result, and extension-status data required to
+> provide the service. See [PRIVACY.md](PRIVACY.md) for the exact data flow.
+
 [![Node.js 22+](https://img.shields.io/badge/Node.js-22%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Microsoft Edge](https://img.shields.io/badge/Microsoft%20Edge-ready-0078D7?logo=microsoftedge&logoColor=white)](https://www.microsoft.com/edge)
 [![Playwright](https://img.shields.io/badge/Playwright-powered-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
@@ -221,3 +228,23 @@ See [LEGAL.md](LEGAL.md) for the complete project notice and
 [PRIVACY.md](PRIVACY.md) for the local, hosted, and browser-extension data flow.
 These notices provide transparency but do not eliminate legal or contractual
 risk. Written permission from the service operator is the lowest-risk route.
+
+### For BookMyShow or Bigtree representatives
+
+This is a good-faith, personal, non-commercial engineering project. It is not
+intended to access customer accounts, payment data, private information, or
+booking inventory. If any code, content, name, or operation raises a concern,
+please contact the owner through the
+[madhus1025 GitHub profile](https://github.com/madhus1025) or
+[open a repository issue](https://github.com/madhus1025/SeatWatcher/issues/new)
+identifying the affected material and requested action. Sensitive security
+details can be submitted through
+[GitHub private vulnerability reporting](https://github.com/madhus1025/SeatWatcher/security/advisories/new).
+The owner intends to review the request promptly and, where reasonably
+appropriate, disable or remove disputed functionality or content while the
+concern is evaluated.
+
+Where appropriate, direct notice and a reasonable opportunity to address the
+concern before escalation would be appreciated. This is a good-faith request,
+not a waiver of anyone's rights and not a guarantee against legal action,
+damages, costs, or penalties.

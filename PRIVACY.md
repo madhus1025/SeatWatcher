@@ -6,6 +6,19 @@ This notice explains what Seat Watcher processes in local and hosted modes. Seat
 Watcher is an independent project and is not part of BookMyShow. BookMyShow's
 own privacy policy applies separately when you visit its website.
 
+## No behavioral tracking
+
+Seat Watcher's application code contains no advertising SDK, product analytics,
+fingerprinting, sale of data, or cross-site behavioral profiling. It does not
+request or store BookMyShow passwords, account credentials, payment-card
+details, or booking history.
+
+"No behavioral tracking" does not mean that the app processes no data. The
+minimum operational data described below is needed to maintain a private
+watchlist, perform requested checks, pair the companion, and deliver alerts.
+The hosting provider and linked third-party services may also receive ordinary
+request metadata under their own policies.
+
 ## Data Seat Watcher processes
 
 A watch can contain:

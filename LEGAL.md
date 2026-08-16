@@ -40,6 +40,34 @@ blocks access, and use the software only for shows you personally intend to
 book. The lowest-risk option is to obtain written permission from the service
 operator before distributing or operating automated monitoring software.
 
+## For BookMyShow and Bigtree representatives
+
+This repository is published as a good-faith, personal, non-commercial
+engineering project. It is not intended to expose a security vulnerability,
+access customer accounts, collect credentials or payment information, reserve
+or alter inventory, or interfere with booking operations. The project contains
+no advertising, sale of data, or behavioral analytics.
+
+If you believe any code, screenshot, name, documentation, or operation infringes
+your rights, conflicts with your policies, or creates a service or security
+concern, please contact the owner through the
+[madhus1025 GitHub profile](https://github.com/madhus1025) or
+[open a repository issue](https://github.com/madhus1025/SeatWatcher/issues/new).
+Sensitive security details can be submitted through
+[GitHub private vulnerability reporting](https://github.com/madhus1025/SeatWatcher/security/advisories/new).
+Please identify the affected material, the basis of the concern, and the
+requested action. The owner intends to review a good-faith request promptly and,
+where reasonably appropriate, temporarily disable access, make the repository
+private, or remove disputed functionality or content while the matter is
+evaluated.
+
+Where appropriate, the owner respectfully requests direct notice and a
+reasonable opportunity to address the concern before escalation. This paragraph
+is a statement of intent and a request for cooperation. It is not a contract,
+does not require prior notice, does not waive or limit anyone's legal rights or
+remedies, and cannot guarantee avoidance of a claim, damages, costs, fines, or
+other action.
+
 ## Third-party screenshots
 
 The guide screenshots under `public/help/` depict third-party pages solely to
